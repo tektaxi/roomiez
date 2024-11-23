@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, Button } from 'react-native';
+import UploadImage from '@/components/UploadImage';
 
 
 const ProfilePage = () => {
@@ -18,14 +19,15 @@ const ProfilePage = () => {
   const [smokingDrugsDrinking, setSmokingDrugsDrinking] = useState('');
   const [socialMedias, setSocialMedias] = useState('');
 
-  return (
-    <View style={styles.container}>
-      {/* Fixed Header */}
+  return ( 
+    <ScrollView style={styles.container}>
+      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerText}>Allenna</Text>
       </View>
-    
-    <ScrollView style={styles.container}>
+      <View style={styles.container}>
+        <UploadImage/>
+      </View>
       {/* Biography */}
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Biography</Text>
@@ -174,10 +176,9 @@ const ProfilePage = () => {
       {/* Submit Button */}
       <Button title="Save Profile" onPress={() => console.log('Profile saved')} />
     </ScrollView>
-
-    </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -187,7 +188,7 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 60,
-    backgroundColor: '#6200ee',
+    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 16,
@@ -195,7 +196,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 20,
-    color: '#fff',
+    color: '#3D405B',
     fontWeight: 'bold',
   },
   inputContainer: {
@@ -212,6 +213,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     paddingLeft: 10,
+  },
+  uploadImage: {
+    padding:50,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   picker: {
     height: 50,
