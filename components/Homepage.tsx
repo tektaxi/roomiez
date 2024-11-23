@@ -1,7 +1,25 @@
-import React from 'react';
-import type { UserProfile } from '../types';
-import { Instagram, Send, MessageCircle, X, Moon, Cigarette, CigaretteOff, Wine, WineOff, Sparkles } from 'lucide-react-native';
-import { View, Text, Image, StyleSheet, TouchableOpacity, Linking } from 'react-native';
+import React from "react";
+import type { UserProfile } from "../types";
+import {
+  Instagram,
+  Send,
+  MessageCircle,
+  X,
+  Moon,
+  Cigarette,
+  CigaretteOff,
+  Wine,
+  WineOff,
+  Sparkles,
+} from "lucide-react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 
 interface ProfileCardProps {
   profile: UserProfile;
@@ -19,20 +37,27 @@ export function ProfileCard1({ profile }: ProfileCardProps) {
 
       <div className="absolute bottom-0 w-full p-4 text-white">
         <div className="flex items-center justify-between mb-2">
-          <h2 className="text-2xl font-bold">{profile.name}, {profile.age}</h2>
+          <h2 className="text-2xl font-bold">
+            {profile.name}, {profile.age}
+          </h2>
           <div className="flex gap-2">
             {profile.socialLinks.instagram && (
-              <a href={profile.socialLinks.instagram} target="_blank" rel="noopener noreferrer">
+              <a
+                href={profile.socialLinks.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Instagram className="w-5 h-5" />
               </a>
             )}
-
           </div>
         </div>
 
         <div className="mb-3">
           <p className="text-sm opacity-90">{profile.college}</p>
-          <p className="text-sm opacity-90">{profile.major} • {profile.year}</p>
+          <p className="text-sm opacity-90">
+            {profile.major} • {profile.year}
+          </p>
         </div>
 
         <div className="flex gap-2 mb-3">
@@ -70,9 +95,7 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
           <View style={styles.socialLinks}>
             {profile.socialLinks.instagram && (
               <TouchableOpacity
-                onPress={() =>
-                  Linking.openURL(profile.socialLinks.instagram)
-                }
+                onPress={() => Linking.openURL(profile.socialLinks.instagram)}
               >
                 <Instagram width={20} height={20} color="white" />
               </TouchableOpacity>
@@ -111,44 +134,44 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
 
 const styles = StyleSheet.create({
   card: {
-    position: 'relative',
+    position: "relative",
     width: 320,
     height: 480,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 16,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   profileImage: {
-    width: '100%',
-    height: '50%',
+    width: "100%",
+    height: "50%",
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
   },
   content: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
-    width: '100%',
+    width: "100%",
     padding: 16,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 8,
   },
   name: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
+    fontWeight: "bold",
+    color: "#fff",
   },
   socialLinks: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 8,
   },
   details: {
@@ -156,23 +179,23 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    color: '#fff',
+    color: "#fff",
     opacity: 0.9,
   },
   preferences: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 8,
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 12,
   },
   cleanliness: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 4,
   },
   bio: {
     lineHeight: 20,
     height: 60, // To limit bio height
-    overflow: 'hidden',
+    overflow: "hidden",
   },
 });
