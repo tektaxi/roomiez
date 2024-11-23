@@ -21,6 +21,9 @@ export default function ProfileScreen() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Profile</ThemedText>
       </ThemedView>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Button title="Add Data" onPress={writeUserData} />
+      </View>
     </ParallaxScrollView>
   );
 }
