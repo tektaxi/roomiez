@@ -142,7 +142,7 @@ export default function ProfileCard({ profile,handleSwipeLeft,handleSwipeRight}:
     },
     overlay: {
       ...StyleSheet.absoluteFillObject,
-      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+      backgroundColor: 'rgba(0, 0, 0, 0.3)',
     },
     content: {
       position: 'absolute',
