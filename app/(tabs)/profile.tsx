@@ -8,6 +8,8 @@ import {
   Button,
 } from "react-native";
 import UploadImage from "@/components/UploadImage";
+import { database } from "../../firebaseConfig";
+import { ref, set, push } from "firebase/database";
 
 const ProfileScreen = () => {
   // State for the form values
@@ -24,6 +26,25 @@ const ProfileScreen = () => {
   const [sleepingSchedule, setSleepingSchedule] = useState("");
   const [smokingDrugsDrinking, setSmokingDrugsDrinking] = useState("");
   const [socialMedias, setSocialMedias] = useState("");
+
+  const writeToDatabase = () => {
+    // Reference to the desired database path
+    const dbRef = ref(database, "users/"); // 'users/' is an example path
+
+    // Write data using push for unique keys or set for specific keys
+    const newUserRef = push(dbRef); // Create a new unique child
+    set(newUserRef, {
+      username: "example_user",
+      email: "user@example.com",
+      createdAt: new Date().toISOString(),
+    })
+      .then(() => {
+        console.log("Data written successfully!");
+      })
+      .catch((error) => {
+        console.error("Error writing data:", error);
+      });
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -180,10 +201,7 @@ const ProfileScreen = () => {
       </View>
 
       {/* Submit Button */}
-      <Button
-        title="Save Profile"
-        onPress={() => console.log("Profile saved")}
-      />
+      <Button title="Save Profile" onPress={writeToDatabase} />
     </ScrollView>
   );
 };
