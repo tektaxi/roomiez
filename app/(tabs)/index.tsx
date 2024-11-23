@@ -1,99 +1,64 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React from "react";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { Image, StyleSheet, Platform, View, Text } from "react-native";
 
-import Homepage from '@/components/Homepage';
+import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+
+import Profile from "@/components/ProfileCard";
+import { blue } from "react-native-reanimated/lib/typescript/Colors";
+
 const profileData = {
-  name:'braden',
-  diet:'meat',
-  image:'',
-  college: 'McGill University',
-  major: 'Computer Science',
+  name: "Braden",
+  image:
+    "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80",
+  college: "McGill University",
+  major: "Computer Science",
   year: 3,
-  age:10,
-  ethnicity:'asian',
+  age: 19,
+  ethnicity: "asian",
 
-  bio: 'A passionate developer who loves React Native!',
+  bio: "A passionate developer who loves React Native!",
   socialLinks: {
-    instagram: 'abc',
-    spotify: 'abc',
+    instagram: "abc",
+    spotify: "abc",
   },
   preferences: {
     nightOwl: true,
     smoking: false,
-    drinking:false,
-    pets:false,
+    drinking: false,
+    pets: false,
+    vegan: false,
     cleanliness: 5,
   },
-
- 
-  
 };
 
 export default function HomeScreen() {
-  return(
-     <Homepage profile={profileData} />
-  );
-  
-}
-
-export  function HomeScreen2() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View style={styles.container}>
+      <Text style={styles.blue}>Swipe!</Text>
+      <Profile profile={profileData} />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 8,
+  },
+  blue: {
+    color: " baby blue",
+    fontWeight: "bold",
+    fontSize: 30,
   },
   stepContainer: {
     gap: 8,
@@ -104,6 +69,6 @@ const styles = StyleSheet.create({
     width: 290,
     bottom: 0,
     left: 0,
-    position: 'absolute',
+    position: "absolute",
   },
 });
