@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Image, View, Platform, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
+import {
+    SquarePen
+  } from "lucide-react-native";
 
 export default function UploadImage() {
     const [image, setImage] = useState<string | undefined>(undefined);
@@ -28,12 +31,14 @@ export default function UploadImage() {
             <View style={imageUploaderStyles.container}>
         
                 {
-                    image  && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+                    image  && <Image source={{ uri: image }} style={{ width: '100%', height: '100%' }}
+                    resizeMode="cover" />
                 }
                     <View style={imageUploaderStyles.uploadBtnContainer}>
                         <TouchableOpacity onPress={addImage} style={imageUploaderStyles.uploadBtn} >
-                            <Text>{image ? 'Edit' : 'Upload'} Image</Text>
-                            <AntDesign name="camera" size={20} color="black" />
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <SquarePen width={20} height={60} color="black" />
+                            </View>
                         </TouchableOpacity>
                     </View>
             </View>
@@ -61,7 +66,8 @@ const imageUploaderStyles=StyleSheet.create({
         position:'relative',
         borderRadius:12,
         overflow:'hidden',
-        // flex: 1,
+        justifyContent: 'center', // Center content vertically
+        alignItems: 'center', // Center content horizontally
     },
     uploadBtnContainer:{
         opacity:0.7,
