@@ -10,7 +10,7 @@ import { blue } from 'react-native-reanimated/lib/typescript/Colors';
 const profileData = [
   {
   name:'Braden',
-  image:'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80',
+  image:require('../../assets/images/mark.png'),
   college: 'McGill University',
   major: 'Computer Science',
   year: 3,
@@ -33,7 +33,7 @@ const profileData = [
 },
 {
   name:'Alenna',
-  image:'https://unsplash.com/photos/woman-in-brown-long-sleeved-top-standing-beside-wall-kvKSL7B6eTo',
+  image: require('../../assets/images/mark.png'),
   college: 'McGill University',
   major: 'Computer Science',
   year: 2,
@@ -56,7 +56,7 @@ const profileData = [
 },
 {
   name:'Bill',
-  image:'https://unsplash.com/photos/closeup-photography-of-woman-smiling-mEZ3PoFGs_k',
+  image:require('../../assets/images/mark.png'),
   college: 'McGill University',
   major: 'Computer Science',
   year: 2,
@@ -79,7 +79,7 @@ const profileData = [
 },
 {
   name:'Tavi',
-  image:'https://unsplash.com/photos/grayscale-photo-of-a-woman-wearing-white-off-shoulder-shirt-kXC0dbqtRe4',
+  image:require('../../assets/images/mark.png'),
   college: 'McGill University',
   major: 'Computer Science',
   year: 2,
@@ -127,14 +127,21 @@ export default function HomeScreen() {
   const handleSwipeLeft = (index: number) => {
     const card = cardRefs.current.get(index); // Get the specific card ref
     if (card) {
-      card.swipe('left'); // Programmatically swipe left
+      card.swipe('left'); // Programmatically swipe left when X
+    }
+  };
+
+  const handleSwipeRight = (index: number) => {
+    const card = cardRefs.current.get(index); // Get the specific card ref
+    if (card) {
+      card.swipe('right'); // Programmatically swipe right when chat 
     }
   };
   
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Swipe Profiles</Text>
+      <Text style={styles.header}>Find your match!</Text>
       <View style={styles.cardContainer}>
       {currentProfiles.map((profile, index) => (
         <TinderCard 
@@ -143,13 +150,14 @@ export default function HomeScreen() {
           onSwipe={(direction) => handleSwipe(direction, index)}
           onCardLeftScreen={() => handleCardLeftScreen(index)}
           swipeRequirementType="position"
-          preventSwipe={['up', 'down']} 
+          preventSwipe={['up', 'down','right']} 
         >
           <View style={styles.card}>
           <View style={[{ position: 'absolute', width: '100%',alignSelf: 'center'}]}>
           <Profile 
         profile={profile} 
         handleSwipeLeft={() => handleSwipeLeft(index)} 
+        handleSwipeRight={() => handleSwipeRight(index)}
       />
           </View>
           </View>

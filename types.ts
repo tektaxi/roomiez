@@ -1,3 +1,5 @@
+import { ImageSourcePropType } from "react-native";
+
 export interface UserProfile {
     name: string;
     age: number;
@@ -6,7 +8,7 @@ export interface UserProfile {
     major: string;
     year: number;
     bio: string;
-    image: string;
+    image: ImageSourcePropType;
     socialLinks: {
       instagram: string;
       spotify?: string;

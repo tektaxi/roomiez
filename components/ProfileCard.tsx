@@ -1,19 +1,40 @@
 import React from 'react';
 import type { UserProfile } from '../types';
 import { Instagram,X, Moon, Cigarette,CigaretteOff,Wine,WineOff, Sparkles, MessageCircleIcon,Vegan,Sun} from 'lucide-react-native';
-import { View, Text, Image, StyleSheet, TouchableOpacity,Linking} from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity,Linking,Animated,TextInput,Dimensions,KeyboardAvoidingView,Platform, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import { useState } from 'react';
+import { AnimatedView } from 'react-native-reanimated/lib/typescript/component/View';
+import ChatBox from './Chatbox';
 
 interface ProfileCardProps {
   profile: UserProfile;
   handleSwipeLeft: () => void; 
+  handleSwipeRight: () => void; 
 }
 
-export default function ProfileCard({ profile,handleSwipeLeft}: ProfileCardProps) {
+
+export default function ProfileCard({ profile,handleSwipeLeft,handleSwipeRight}: ProfileCardProps) {
+
+  const [isChatboxVisible, setChatboxVisible] = useState(false);
+  const [message, setMessage] = useState('');
+
+  const toggleChatbox = () => {
+    setChatboxVisible(!isChatboxVisible);
+  };
+
+  const handleSendMessage = (message: string) => {
+    console.log(`Message to ${profile.name}:`, message);
+    setMessage('');
+    setChatboxVisible(false); // Close the chatbox
+    handleSwipeRight(); // Trigger the swipe right animation
+  };
+
     return (
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.card}>
         {/* Profile Image */}
         <Image
-          source={{ uri: profile.image }}
+          source={profile.image}
           style={styles.profileImage}
           
         />
@@ -76,14 +97,17 @@ export default function ProfileCard({ profile,handleSwipeLeft}: ProfileCardProps
           <TouchableOpacity style={styles.iconButton} onPress={handleSwipeLeft}>
             <X width={24} height={24} color="white" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton} onPress={() => console.log('Message button pressed')}>
+
+          <TouchableOpacity style={styles.iconButton} onPress={toggleChatbox}>
             <MessageCircleIcon width={24} height={24} color="white" />
-          </TouchableOpacity>
+          </TouchableOpacity>          
+            {isChatboxVisible && (
+              <ChatBox onClose={toggleChatbox} onSend={handleSendMessage} />
+              )}
           </View>
         </View>
-        
-
       </View>
+      </TouchableWithoutFeedback>
     );
   }
   
@@ -95,6 +119,9 @@ export default function ProfileCard({ profile,handleSwipeLeft}: ProfileCardProps
   }
 
   const styles = StyleSheet.create({
+    container:{
+      flex:1
+    },
     card: {
       position: 'relative',
       width: 320,
