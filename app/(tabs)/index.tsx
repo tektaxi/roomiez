@@ -5,7 +5,42 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
+import Homepage from '@/components/Homepage';
+const profileData = {
+  name:'braden',
+  diet:'meat',
+  image:'',
+  college: 'McGill University',
+  major: 'Computer Science',
+  year: 3,
+  age:10,
+  ethnicity:'asian',
+
+  bio: 'A passionate developer who loves React Native!',
+  socialLinks: {
+    instagram: 'abc',
+    spotify: 'abc',
+  },
+  preferences: {
+    nightOwl: true,
+    smoking: false,
+    drinking:false,
+    pets:false,
+    cleanliness: 5,
+  },
+
+ 
+  
+};
+
 export default function HomeScreen() {
+  return(
+     <Homepage profile={profileData} />
+  );
+  
+}
+
+export  function HomeScreen2() {
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
