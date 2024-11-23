@@ -1,55 +1,11 @@
 import React from 'react';
 import type { UserProfile } from '../types';
-import { Instagram,Send,MessageCircle,X, Moon, Cigarette,CigaretteOff,Wine,WineOff, Sparkles } from 'lucide-react-native';
+import { Instagram,X, Moon, Cigarette,CigaretteOff,Wine,WineOff, Sparkles, MessageCircleIcon,Vegan,Sun} from 'lucide-react-native';
 import { View, Text, Image, StyleSheet, TouchableOpacity,Linking} from 'react-native';
 
 interface ProfileCardProps {
   profile: UserProfile;
 }
-
-export function ProfileCard1({ profile }: ProfileCardProps) {
-  return (
-    <div className="relative w-[320px] h-[480px] bg-white rounded-2xl shadow-xl overflow-hidden">
-      <img
-        src={profile.image}
-        alt={profile.name}
-        className="w-full h-auto max-h-1/2 object-contain"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-      
-      <div className="absolute bottom-0 w-full p-4 text-white">
-        <div className="flex items-center justify-between mb-2">
-          <h2 className="text-2xl font-bold">{profile.name}, {profile.age}</h2>
-          <div className="flex gap-2">
-            {profile.socialLinks.instagram && (
-              <a href={profile.socialLinks.instagram} target="_blank" rel="noopener noreferrer">
-                <Instagram className="w-5 h-5" />
-              </a>
-            )}
-            
-          </div>
-        </div>
-        
-        <div className="mb-3">
-          <p className="text-sm opacity-90">{profile.college}</p>
-          <p className="text-sm opacity-90">{profile.major} • {profile.year}</p>
-        </div>
-        
-        <div className="flex gap-2 mb-3">
-          {profile.preferences.nightOwl && <Moon className="w-4 h-4" />}
-          {profile.preferences.smoking && <Cigarette className="w-4 h-4" />}
-          <div className="flex items-center">
-            <Sparkles className="w-4 h-4 mr-1" />
-            <span className="text-sm">{profile.preferences.cleanliness}/5</span>
-          </div>
-        </div>
-        
-        <p className="text-sm opacity-90 line-clamp-3">{profile.bio}</p>
-      </div>
-    </div>
-  );
-}
-
 export default function ProfileCard({ profile }: ProfileCardProps) {
     return (
       <View style={styles.card}>
@@ -57,7 +13,7 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
         <Image
           source={{ uri: profile.image }}
           style={styles.profileImage}
-          resizeMode="contain"
+          
         />
         <View style={styles.overlay} />
   
@@ -65,7 +21,7 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
           {/* Name and Social Links */}
           <View style={styles.header}>
             <Text style={styles.name}>
-              {profile.name}, {profile.age}
+              {profile.name}
             </Text>
             <View style={styles.socialLinks}>
               {profile.socialLinks.instagram && (
@@ -74,7 +30,7 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
                     Linking.openURL(profile.socialLinks.instagram)
                   }
                 >
-                  <Instagram width={20} height={20} color="white" />
+                  <Instagram width={24} height={24} color="white" />
                 </TouchableOpacity>
               )}
             </View>
@@ -82,20 +38,28 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
   
           {/* College and Major */}
           <View style={styles.details}>
+            <Text style={styles.text}>Age:{profile.age}</Text>
             <Text style={styles.text}>{profile.college}</Text>
             <Text style={styles.text}>
-              {profile.major} • {profile.year}
+              {profile.major} • {getSuffix(profile.year)}
             </Text>
+            {/* <Text style={styles.text}>
+              {profile.ethnicity}
+            </Text> */}
           </View>
   
           {/* Preferences */}
           <View style={styles.preferences}>
-            {profile.preferences.nightOwl && (
+            {profile.preferences.nightOwl ?(
               <Moon width={16} height={16} color="white" />
-            )}
-            {profile.preferences.smoking && (
+            ):(<Sun width={16} height={16} color="white" />)}
+            {profile.preferences.smoking?(
               <Cigarette width={16} height={16} color="white" />
-            )}
+            ):(<CigaretteOff width={16} height={16} color="white"/>)}
+            {profile.preferences.drinking ? (
+              <Wine width={16} height={16} color="white" />
+            ):(<WineOff width={16} height={16} color="white" />)}
+            {profile.preferences.vegan&&(<Vegan width={16} height={16} color="white" />)}
             <View style={styles.cleanliness}>
               <Sparkles width={16} height={16} color="white" />
               <Text style={styles.text}>{profile.preferences.cleanliness}/5</Text>
@@ -104,16 +68,35 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
   
           {/* Bio */}
           <Text style={[styles.text, styles.bio]}>{profile.bio}</Text>
+
+          {/* Buttons */}
+          <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.iconButton} onPress={() => console.log('X button pressed')}>
+            <X width={24} height={24} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton} onPress={() => console.log('Message button pressed')}>
+            <MessageCircleIcon width={24} height={24} color="white" />
+          </TouchableOpacity>
+          </View>
         </View>
+        
+
       </View>
     );
   }
   
+  function getSuffix(year: number): string{
+    if(year===1) return year+'st';
+    if(year===2) return year+'nd';
+    if(year===3) return year+'rd';
+    return '${year}th';
+  }
+
   const styles = StyleSheet.create({
     card: {
       position: 'relative',
       width: 320,
-      height: 480,
+      height: 500,
       backgroundColor: '#fff',
       borderRadius: 16,
       shadowColor: '#000',
@@ -124,7 +107,7 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
     },
     profileImage: {
       width: '100%',
-      height: '50%',
+      height: '100%',
     },
     overlay: {
       ...StyleSheet.absoluteFillObject,
@@ -174,5 +157,17 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
       lineHeight: 20,
       height: 60, // To limit bio height
       overflow: 'hidden',
+    },
+    buttonContainer:{
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    iconButton:{
+      padding: 12,
+      backgroundColor: '#444',
+      borderRadius: 24,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   });

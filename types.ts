@@ -7,7 +7,6 @@ export interface UserProfile {
     year: number;
     bio: string;
     image: string;
-    diet: string;
     socialLinks: {
       instagram: string;
       spotify?: string;
@@ -16,6 +15,7 @@ export interface UserProfile {
       smoking: boolean;
       drinking: boolean;
       pets: boolean;
+      vegan:boolean;
       nightOwl: boolean;
       cleanliness: number;
     };
