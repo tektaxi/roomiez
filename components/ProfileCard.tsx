@@ -5,8 +5,10 @@ import { View, Text, Image, StyleSheet, TouchableOpacity,Linking} from 'react-na
 
 interface ProfileCardProps {
   profile: UserProfile;
+  handleSwipeLeft: () => void; 
 }
-export default function ProfileCard({ profile }: ProfileCardProps) {
+
+export default function ProfileCard({ profile,handleSwipeLeft}: ProfileCardProps) {
     return (
       <View style={styles.card}>
         {/* Profile Image */}
@@ -71,7 +73,7 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
 
           {/* Buttons */}
           <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.iconButton} onPress={() => console.log('X button pressed')}>
+          <TouchableOpacity style={styles.iconButton} onPress={handleSwipeLeft}>
             <X width={24} height={24} color="white" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton} onPress={() => console.log('Message button pressed')}>
@@ -103,6 +105,8 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.3,
       shadowRadius: 4,
+      alignItems:'center',
+      justifyContent: 'center',
       overflow: 'hidden',
     },
     profileImage: {
