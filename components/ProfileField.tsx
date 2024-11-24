@@ -25,46 +25,55 @@ interface InfoRowProps {
 
 
 // Reusable BioRow component
-const BioRow: React.FC<BioRowProps> = ({ label, value, leftSubtext, rightSubtext, workPageText,
-  workPagePlaceholder,}) => {
-    // const router = useRouter(); // Access the router object
-    const [modalVisible, setModalVisible] = useState(false);
+const BioRow: React.FC<BioRowProps> = ({
+  label,
+  value,
+  leftSubtext: initialValue,
+  rightSubtext,
+  workPageText,
+  workPagePlaceholder,
+}) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [leftSubtext, setValue] = useState(initialValue);
 
-    const handleOpenModal = () => setModalVisible(true);
-    const handleCloseModal = () => setModalVisible(false);
+  const handleOpenModal = () => setModalVisible(true);
+  const handleCloseModal = () => setModalVisible(false);
 
+  const handleTextChange = (newText: string) => {
+    setValue(newText); // Update the displayed value when the WorkPage sends it back
+  };
 
-    return (
-      <TouchableOpacity 
-      style={styles.row} 
-      onPress={handleOpenModal}// Navigate programmatically
-      >
-      {/* Modal with WorkPage */}
-      <Modal
-          animationType="none"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={handleCloseModal}
-        >
-          <WorkPage
-            text={workPageText} // Pass the title dynamically
-            placeholder={workPagePlaceholder} // Pass the placeholder dynamically
-            onClose={handleCloseModal}
-          />
-        </Modal>
-        
+  return (
+    <>
+      <TouchableOpacity style={styles.row} onPress={handleOpenModal}>
         <View style={styles.leftSection}>
           <Text style={styles.label}>{label}</Text>
-          {leftSubtext && <Text style={styles.subtext}>{leftSubtext}</Text>} {/* Subtext below label */}
+          {leftSubtext && <Text style={styles.subtext}>{leftSubtext}</Text>} {/* Optional subtext */}
         </View>
         <View style={styles.rightSection}>
           <Text style={styles.value}>{value}</Text>
-          {rightSubtext && <Text style={styles.subtext}>{rightSubtext}</Text>} {/* Subtext below value */}
+          {rightSubtext && <Text style={styles.subtext}>{rightSubtext}</Text>} {/* Optional subtext */}
           <Text style={styles.arrow}>›</Text>
         </View>
       </TouchableOpacity>
-    );
-  };
+
+      {/* Modal with WorkPage */}
+      <Modal
+        animationType="none"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={handleCloseModal}
+      >
+        <WorkPage
+          text={workPageText}
+          placeholder={workPagePlaceholder}
+          onClose={handleCloseModal}
+          onChangeText={handleTextChange} // Pass handler for object update
+        />
+      </Modal>
+    </>
+  );
+};
 
   const InfoRow: React.FC<InfoRowProps> = ({
     label,
@@ -78,14 +87,12 @@ const BioRow: React.FC<BioRowProps> = ({ label, value, leftSubtext, rightSubtext
     const handleOpenModal = () => setModalVisible(true);
     const handleCloseModal = () => setModalVisible(false);
   
-    // Update value from WorkPage
-    const handleTextChange = (newValue: string) => {
-      setValue(newValue);
+    const handleTextChange = (newText: string) => {
+      setValue(newText); // Update the displayed value when the WorkPage sends it back
     };
   
     return (
       <>
-        {/* Touchable Row */}
         <TouchableOpacity style={styles.row} onPress={handleOpenModal}>
           <View style={styles.leftSection}>
             <Text style={styles.label}>{label}</Text>
@@ -96,7 +103,6 @@ const BioRow: React.FC<BioRowProps> = ({ label, value, leftSubtext, rightSubtext
           </View>
         </TouchableOpacity>
   
-        {/* Modal with WorkPage */}
         <Modal
           animationType="none"
           transparent={true}
@@ -107,7 +113,7 @@ const BioRow: React.FC<BioRowProps> = ({ label, value, leftSubtext, rightSubtext
             text={workPageText}
             placeholder={workPagePlaceholder}
             onClose={handleCloseModal}
-            onTextChange={handleTextChange} // Pass the handler
+            onChangeText={handleTextChange} // Pass the handler to update InfoRow's value
           />
         </Modal>
       </>
