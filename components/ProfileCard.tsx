@@ -3,17 +3,17 @@ import type { UserProfile } from '../types';
 import { Instagram,X, Moon, Cigarette,CigaretteOff,Wine,WineOff, Sparkles, MessageCircleIcon,Vegan,Sun} from 'lucide-react-native';
 import { View, Text, Image, StyleSheet, TouchableOpacity,Linking,Animated,TextInput,Dimensions,KeyboardAvoidingView,Platform, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import { useState } from 'react';
-import { AnimatedView } from 'react-native-reanimated/lib/typescript/component/View';
 import ChatBox from './Chatbox';
 
 interface ProfileCardProps {
   profile: UserProfile;
   handleSwipeLeft: () => void; 
   handleSwipeRight: () => void; 
+  handleProfilePress: (profile: UserProfile) => void;
 }
 
 
-export default function ProfileCard({ profile,handleSwipeLeft,handleSwipeRight}: ProfileCardProps) {
+export default function ProfileCard({ profile,handleSwipeLeft,handleSwipeRight,handleProfilePress}: ProfileCardProps) {
 
   const [isChatboxVisible, setChatboxVisible] = useState(false);
   const [message, setMessage] = useState('');
@@ -27,11 +27,18 @@ export default function ProfileCard({ profile,handleSwipeLeft,handleSwipeRight}:
     setMessage('');
     setChatboxVisible(false); // Close the chatbox
     handleSwipeRight(); // Trigger the swipe right animation
+
   };
 
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <TouchableOpacity
+        activeOpacity={1}
+        style={styles.card}
+        onLongPress={() => handleProfilePress(profile)} // Expand profile on press
+      >
       <View style={styles.card}>
+      
         {/* Profile Image */}
         <Image
           source={profile.image}
@@ -107,6 +114,7 @@ export default function ProfileCard({ profile,handleSwipeLeft,handleSwipeRight}:
           </View>
         </View>
       </View>
+      </TouchableOpacity>
       </TouchableWithoutFeedback>
     );
   }

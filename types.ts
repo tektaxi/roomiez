@@ -8,6 +8,9 @@ export interface UserProfile {
     major: string;
     year: number;
     bio: string;
+    priceRangeLow: number;
+    priceRangeHigh: number;
+    religion: string;
     image: ImageSourcePropType;
     socialLinks: {
       instagram: string;

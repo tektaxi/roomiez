@@ -6,11 +6,13 @@ import { Image, StyleSheet, Platform ,View,Text,TouchableOpacity,Animated} from 
 
 import Profile from '@/components/ProfileCard';
 import { blue } from 'react-native-reanimated/lib/typescript/Colors';
+import ExpandedProfile from '@/components/ExpandedProfile';
+import type { UserProfile } from '../../types';
 
 const profileData = [
   {
   name:'Braden',
-  image:require('../../assets/images/mark.png'),
+  image:require('../../assets/images/braden.jpg'),
   college: 'McGill University',
   major: 'Computer Science',
   year: 3,
@@ -33,7 +35,7 @@ const profileData = [
 },
 {
   name:'Alenna',
-  image: require('../../assets/images/mark.png'),
+  image: require('../../assets/images/allena.jpg'),
   college: 'McGill University',
   major: 'Computer Science',
   year: 2,
@@ -56,7 +58,7 @@ const profileData = [
 },
 {
   name:'Bill',
-  image:require('../../assets/images/mark.png'),
+  image:require('../../assets/images/bill.jpg'),
   college: 'McGill University',
   major: 'Computer Science',
   year: 2,
@@ -79,14 +81,16 @@ const profileData = [
 },
 {
   name:'Tavi',
-  image:require('../../assets/images/mark.png'),
+  image:require('../../assets/images/tavi.jpg'),
   college: 'McGill University',
   major: 'Computer Science',
   year: 2,
   age:20,
   ethnicity:'asian',
-
-  bio: 'Hello World!',
+  religion:'non',
+  bio: 'Passionate software developer with a love for solving complex problems. Adept at building user-friendly applications using React Native and JavaScript. Enthusiastic about AI, open-source, and collaborative teamwork. Enjoys hiking, photography, and exploring creative hobbies. Lifelong learner eager to innovate and contribute to impactful projects in technology and beyond.Hello World!',
+  priceRangeLow: 1000,
+  priceRangeHigh: 2000,
   socialLinks: {
     instagram: 'abc',
     spotify: 'abc',
@@ -99,17 +103,15 @@ const profileData = [
     vegan:false,
     cleanliness: 5,
   },
-}
+},
 ];
 
 
 
 export default function HomeScreen() {
+  //Swipe Features
   const [currentProfiles, setCurrentProfiles] = useState(profileData);
- 
   const cardRefs = useRef(new Map()); 
-  
-
   const handleSwipe = (direction: string, index: number) => {
     console.log(`Swiped ${direction} on profile: ${currentProfiles[index].name}`);
 
@@ -118,7 +120,6 @@ export default function HomeScreen() {
       setTimeout(()=>{setCurrentProfiles((prev) => prev.filter((_, i) => i !== index));},300)
     }
   };
-
 
   const handleCardLeftScreen = (index: number) => {
     console.log(`${currentProfiles[index].name} left the screen`);
@@ -137,13 +138,33 @@ export default function HomeScreen() {
       card.swipe('right'); // Programmatically swipe right when chat 
     }
   };
-  
+
+
+  //Profile expand
+
+  const [expandedProfile, setExpandedProfile] = useState<UserProfile | null>(null);
+
+  const handleProfilePress = (profile: UserProfile) => {
+    setExpandedProfile(profile); // Expand the clicked profile
+  };
+  const handleCloseExpandedProfile = () => {
+    setExpandedProfile(null); // Close the expanded view
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Find your match!</Text>
+      {expandedProfile? (
+        <ExpandedProfile
+        profile={expandedProfile}
+        onClose={handleCloseExpandedProfile} // Close the expanded view
+      />
+
+      ):(<>
+      {currentProfiles.length > 0 && (
+      <Text style={styles.header}>Find your match!</Text>)}
       <View style={styles.cardContainer}>
-      {currentProfiles.map((profile, index) => (
+      {currentProfiles.length>0 ?
+      currentProfiles.map((profile, index) => (
         <TinderCard 
           key={profile.name}
           ref={(ref) => cardRefs.current.set(index, ref)}
@@ -158,15 +179,20 @@ export default function HomeScreen() {
         profile={profile} 
         handleSwipeLeft={() => handleSwipeLeft(index)} 
         handleSwipeRight={() => handleSwipeRight(index)}
+        handleProfilePress={handleProfilePress} 
       />
           </View>
           </View>
         </TinderCard>
-      ))}
+      )):(<View style={styles.endPage}>
+        <Text style={styles.endTitle}>You are living alone!😢</Text>
+      </View>
+    )}
     </View>
+    </>
+   )}
     </View>
   );
-  
 }
 
 
@@ -211,6 +237,44 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     borderRadius: 20,
     resizeMode: 'cover',
+  },
+  endPage:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    
+  },
+  endTitle:{
+    fontSize:50,
+    fontWeight: 'bold',
+    color: '#444',
+  },
+  expandedProfileContainer: {
+    flex: 1,
+    padding: 16,
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+  expandedName: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  expandedDetails: {
+    fontSize: 16,
+    marginVertical: 4,
+  },
+  closeButton: {
+    alignSelf: 'flex-end',
+    padding: 10,
+    backgroundColor: '#ddd',
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  closeButtonText: {
+    fontSize: 14,
+    color: '#333',
   },
 });
 
