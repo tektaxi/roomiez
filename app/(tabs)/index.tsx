@@ -16,6 +16,8 @@ import { blue } from 'react-native-reanimated/lib/typescript/Colors';
 import ExpandedProfile from '@/components/ExpandedProfile';
 import type { UserProfile } from '../../types';
 
+import { useChatContext } from '../ChatContext';
+
 const profileData = [
   {
   name:'Braden',
@@ -160,6 +162,15 @@ export default function HomeScreen() {
   const handleCloseExpandedProfile = () => {
     setExpandedProfile(null); // Close the expanded view
   };
+
+
+
+
+
+
+
+
+
 
   return (
     <View style={styles.container}>

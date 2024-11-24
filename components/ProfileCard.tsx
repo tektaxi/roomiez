@@ -5,6 +5,8 @@ import { View, Text, Image, StyleSheet, TouchableOpacity,Linking,Animated,TextIn
 import { useState } from 'react';
 import ChatBox from './Chatbox';
 
+import { useChatContext } from '../app/ChatContext';
+
 interface ProfileCardProps {
   profile: UserProfile;
   handleSwipeLeft: () => void; 
@@ -15,6 +17,7 @@ interface ProfileCardProps {
 
 export default function ProfileCard({ profile,handleSwipeLeft,handleSwipeRight,handleProfilePress}: ProfileCardProps) {
 
+
   const [isChatboxVisible, setChatboxVisible] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -22,13 +25,19 @@ export default function ProfileCard({ profile,handleSwipeLeft,handleSwipeRight,h
     setChatboxVisible(!isChatboxVisible);
   };
 
+  const { addChatProfile } = useChatContext();
+
+
   const handleSendMessage = (message: string) => {
     console.log(`Message to ${profile.name}:`, message);
     setMessage('');
     setChatboxVisible(false); // Close the chatbox
     handleSwipeRight(); // Trigger the swipe right animation
 
+    addChatProfile({ id: `${profile.name}-${Date.now()}`, title: profile.name });
   };
+
+
 
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
