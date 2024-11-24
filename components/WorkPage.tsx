@@ -1,0 +1,107 @@
+import React, { useEffect, useRef } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Animated,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
+
+interface WorkPageProps {
+    text: string; // Title of the page
+    placeholder: string; // Placeholder for the input
+    onClose: () => void; // Close callback
+    onTextChange: (newText: string) => void; // Callback to pass back the text
+}
+
+const WorkPage: React.FC<WorkPageProps> = ({ text, placeholder, onClose }) => {
+  const slideAnim = useRef(new Animated.Value(400)).current; // Start off-screen (right side)
+
+  useEffect(() => {
+    // Slide in animation
+    Animated.timing(slideAnim, {
+      toValue: 0, // Slide to position 0 (fully visible)
+      duration: 300, // Animation duration in ms
+      useNativeDriver: true, // Use native driver for better performance
+    }).start();
+  }, [slideAnim]);
+
+  const handleClose = () => {
+    // Slide out animation before closing
+    Animated.timing(slideAnim, {
+      toValue: 400, // Slide back off-screen
+      duration: 300,
+      useNativeDriver: true,
+    }).start(onClose); // Trigger the `onClose` prop after animation
+  };
+
+  return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <Animated.View style={[styles.animatedContainer, { transform: [{ translateX: slideAnim }] }]}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={handleClose}>
+            <Text style={styles.backText}>←</Text>
+          </TouchableOpacity>
+          <Text style={styles.title}>{text}</Text>
+        </View>
+
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder={placeholder}
+            placeholderTextColor="#ccc"
+          />
+        </View>
+      </Animated.View>
+    </KeyboardAvoidingView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  animatedContainer: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 50,
+    backgroundColor: "#fff",
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  backText: {
+    fontSize: 20,
+    color: "#000",
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginLeft: 10,
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    marginBottom: 20,
+  },
+  input: {
+    flex: 1,
+    fontSize: 16,
+    paddingVertical: 10,
+    outlineStyle: "none", // Removes outline for web and other platforms
+  },
+  
+});
+
+export default WorkPage;
