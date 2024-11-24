@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Image, View, Platform, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import {
-    SquarePen
-  } from "lucide-react-native";
+import { SquarePen } from "lucide-react-native";
+import { Divider } from '@rneui/themed';
+
 
 export default function UploadImage() {
     const [image, setImage] = useState<string | undefined>(undefined);
