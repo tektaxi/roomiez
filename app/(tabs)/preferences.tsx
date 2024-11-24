@@ -1,13 +1,21 @@
-import { StyleSheet, Image, Platform } from "react-native";
-
-import { Collapsible } from "@/components/Collapsible";
-import { ExternalLink } from "@/components/ExternalLink";
+import { StyleSheet, Image, Platform, Button } from "react-native";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { writeData } from "@/firebaseConfig";
+import { profileData } from "@/constants/Profiles";
 
 export default function PrefsScreen() {
+  const handleAddData = async () => {
+    try {
+      const key = await writeData("users/", profileData); // Add data to the "users/" path
+      console.log("Data added successfully with key:", key);
+    } catch (error) {
+      console.error("Error adding data:", error);
+    }
+  };
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
@@ -22,6 +30,9 @@ export default function PrefsScreen() {
     >
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Preferences</ThemedText>
+      </ThemedView>
+      <ThemedView style={styles.titleContainer}>
+        <Button title="Add Data" onPress={handleAddData} />
       </ThemedView>
     </ParallaxScrollView>
   );

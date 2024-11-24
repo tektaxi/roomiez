@@ -1,5 +1,4 @@
 import { StyleSheet, Image, Platform } from "react-native";
-
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";

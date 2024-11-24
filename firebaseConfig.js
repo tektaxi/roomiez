@@ -1,8 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-import { getDatabase } from "firebase/database";
+import { getDatabase, ref, push, set } from 'firebase/database';
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -20,5 +18,34 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
+
+export const writeData = async (path, data) => {
+    try {
+        const dbRef = ref(database, path); // Reference to the desired path
+        const newRef = push(dbRef); // Generate a new unique key
+        await set(newRef, data); // Set data at the new reference
+        return newRef.key; // Return the key of the newly added data
+    } catch (error) {
+        console.error('Error adding data:', error);
+        throw error; // Re-throw the error so it can be handled by the caller
+    }
+};
+
+export const readData = async (path) => {
+    try {
+        const dbRef = ref(database); // Reference the root of the database
+        const snapshot = await get(child(dbRef, path)); // Get data at the specified path
+
+        if (snapshot.exists()) {
+            return snapshot.val(); // Return the data
+        } else {
+            console.log('No data available at path:', path);
+            return null; // Return null if no data exists
+        }
+    } catch (error) {
+        console.error('Error reading data:', error);
+        throw error; // Re-throw the error so the caller can handle it
+    }
+};
 
 export { database };
