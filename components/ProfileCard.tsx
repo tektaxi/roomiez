@@ -140,7 +140,7 @@ export default function ProfileCard({ profile,handleSwipeLeft,handleSwipeRight,h
     if(year===1) return year+'st';
     if(year===2) return year+'nd';
     if(year===3) return year+'rd';
-    return '${year}th';
+    return year+'th';
   }
 
   const styles = StyleSheet.create({
