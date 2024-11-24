@@ -21,7 +21,7 @@ const profileData = [
 
   bio: 'A passionate developer who loves React Native!',
   socialLinks: {
-    instagram: 'abc',
+    instagram: 'https://www.instagram.com/braden_wei/',
     spotify: 'abc',
   },
   preferences: {
@@ -44,7 +44,7 @@ const profileData = [
 
   bio: 'Hello World!',
   socialLinks: {
-    instagram: 'abc',
+    instagram: 'https://www.instagram.com/allennatang',
     spotify: 'abc',
   },
   preferences: {
@@ -67,7 +67,7 @@ const profileData = [
 
   bio: 'Hello World!',
   socialLinks: {
-    instagram: 'abc',
+    instagram: 'https://www.instagram.com/bill.skills.01',
     spotify: 'abc',
   },
   preferences: {
@@ -92,7 +92,7 @@ const profileData = [
   priceRangeLow: 1000,
   priceRangeHigh: 2000,
   socialLinks: {
-    instagram: 'abc',
+    instagram: 'https://www.instagram.com/tavi_river',
     spotify: 'abc',
   },
   preferences: {

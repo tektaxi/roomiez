@@ -126,19 +126,20 @@ export default function ExpandedProfile({ profile, onClose }: ExpandedProfilePro
       marginBottom: 8,
     },
     detail: {
-      fontFamily: 'Lato',
-      fontSize: 18,
+      fontFamily: 'Courier',
+      fontSize: 15,
       marginBottom: 4,
     },
     bio: {
+     fontFamily: 'Courier',
       fontSize: 16,
       marginTop: 8,
       marginBottom: 16,
       textAlign: 'center',
     },
     preference: {
-    
-      fontSize: 16,
+      fontFamily: 'Courier',
+      fontSize: 15,
       marginBottom: 4,
     },
     animatedContainer: {
