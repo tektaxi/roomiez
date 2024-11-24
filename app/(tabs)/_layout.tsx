@@ -8,6 +8,8 @@ import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
+import { Stack } from 'expo-router';
+
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
@@ -52,8 +54,19 @@ export default function TabLayout() {
         options={{
           title: 'Profile',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
+    
         }}
-      />
+        />
+
+      <Tabs.Screen
+        name="profile_input"
+        options={{
+          title: 'Profile Input',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
+    
+        }}
+        />
+    
     </Tabs>
   );
 }
