@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from "react";
-import {
-  Image,
-  View,
-  Platform,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-} from "react-native";
-import { AntDesign } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
+import React, { useState, useEffect } from 'react';
+import { Image, View, Platform, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
+import { SquarePen } from "lucide-react-native";
+import { Divider } from '@rneui/themed';
+
 
 export default function UploadImage() {
   const [image, setImage] = useState<string | undefined>(undefined);
@@ -29,22 +25,22 @@ export default function UploadImage() {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <View style={imageUploaderStyles.container}>
-        {image && (
-          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-        )}
-        <View style={imageUploaderStyles.uploadBtnContainer}>
-          <TouchableOpacity
-            onPress={addImage}
-            style={imageUploaderStyles.uploadBtn}
-          >
-            <Text>{image ? "Edit" : "Upload"} Image</Text>
-            <AntDesign name="camera" size={20} color="black" />
-          </TouchableOpacity>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={imageUploaderStyles.container}>
+        
+                {
+                    image  && <Image source={{ uri: image }} style={{ width: '100%', height: '100%' }}
+                    resizeMode="cover" />
+                }
+                    <View style={imageUploaderStyles.uploadBtnContainer}>
+                        <TouchableOpacity onPress={addImage} style={imageUploaderStyles.uploadBtn} >
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <SquarePen width={20} height={60} color="black" />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+            </View>
         </View>
-      </View>
-    </View>
   );
 
   //   return (
@@ -59,29 +55,30 @@ export default function UploadImage() {
   //     </View>
   //   );
 }
-const imageUploaderStyles = StyleSheet.create({
-  container: {
-    elevation: 2,
-    height: 250,
-    width: 250,
-    backgroundColor: "#efefef",
-    position: "relative",
-    borderRadius: 12,
-    overflow: "hidden",
-    // flex: 1,
-  },
-  uploadBtnContainer: {
-    opacity: 0.7,
-    position: "absolute",
-    right: 0,
-    bottom: 0,
-    backgroundColor: "lightgrey",
-    width: "100%",
-    height: "25%",
-  },
-  uploadBtn: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+const imageUploaderStyles=StyleSheet.create({
+    container:{
+        elevation:2,
+        height:250,
+        width:250,
+        backgroundColor:'#efefef',
+        position:'relative',
+        borderRadius:12,
+        overflow:'hidden',
+        justifyContent: 'center', // Center content vertically
+        alignItems: 'center', // Center content horizontally
+    },
+    uploadBtnContainer:{
+        opacity:0.7,
+        position:'absolute',
+        right:0,
+        bottom:0,
+        backgroundColor:'lightgrey',
+        width:'100%',
+        height:'25%',
+    },
+    uploadBtn:{
+        display:'flex',
+        alignItems:"center",
+        justifyContent:'center'
+    }
+})

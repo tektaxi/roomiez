@@ -1,236 +1,116 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  ScrollView,
-  Button,
-} from "react-native";
-import UploadImage from "@/components/UploadImage";
-import { database, writeData, readData } from "../../firebaseConfig";
-import { ref, set, push } from "firebase/database";
+import { View, Text, TextInput, StyleSheet, ScrollView, Button } from "react-native";
 
-const ProfileScreen = () => {
+import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { IconSymbol } from "@/components/ui/IconSymbol";
+import React, { useState } from 'react';
+import UploadImage from '@/components/UploadImage';
+import DividerView from "@/components/DividerView";
+import { useContext } from 'react';
+import { Divider, useTheme } from '@rneui/themed';
+import ProfileField from "@/components/ProfileField";
+import ProfileBiography from "@/components/ProfileBiography";
+
+
+const ProfilePage = () => {
   // State for the form values
-  const [biography, setBiography] = useState("");
-  const [lookingFor, setLookingFor] = useState("");
-  const [age, setAge] = useState("");
-  const [area, setArea] = useState("");
-  const [school, setSchool] = useState("");
-  const [major, setMajor] = useState("");
-  const [ethnicity, setEthnicity] = useState("");
-  const [religion, setReligion] = useState("");
-  const [diet, setDiet] = useState("");
-  const [cleaningPreferences, setCleaningPreferences] = useState("");
-  const [sleepingSchedule, setSleepingSchedule] = useState("");
-  const [smokingDrugsDrinking, setSmokingDrugsDrinking] = useState("");
-  const [socialMedias, setSocialMedias] = useState("");
+  const [biography, setBiography] = useState('');
+  const [lookingFor, setLookingFor] = useState('');
+  const [age, setAge] = useState('');
+  const [area, setArea] = useState('');
+  const [school, setSchool] = useState('');
+  const [major, setMajor] = useState('');
+  const [ethnicity, setEthnicity] = useState('');
+  const [religion, setReligion] = useState('');
+  const [diet, setDiet] = useState('');
+  const [cleaningPreferences, setCleaningPreferences] = useState('');
+  const [sleepingSchedule, setSleepingSchedule] = useState('');
+  const [smokingDrugsDrinking, setSmokingDrugsDrinking] = useState('');
+  const [socialMedias, setSocialMedias] = useState('');
 
-  return (
+  return ( 
+    
     <ScrollView style={styles.container}>
+      
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerText}>Allenna</Text>
       </View>
       <View style={styles.container}>
-        <UploadImage />
+        <UploadImage/>
       </View>
-      {/* Biography */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Biography</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Write your biography"
-          value={biography}
-          onChangeText={setBiography}
-          multiline
-        />
-      </View>
+      <Divider/>
 
-      {/* What you're looking for */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>What you're looking for</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="What are you looking for?"
-          value={lookingFor}
-          onChangeText={setLookingFor}
-        />
-      </View>
+      <ProfileField/>
 
-      {/* Age */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Age</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Your age"
-          value={age}
-          onChangeText={setAge}
-          keyboardType="numeric"
-        />
-      </View>
-
-      {/* Area */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Area</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Your area"
-          value={area}
-          onChangeText={setArea}
-        />
-      </View>
-
-      {/* School */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>School</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="School name"
-          value={school}
-          onChangeText={setSchool}
-        />
-      </View>
-
-      {/* Major of Study */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Major of Study</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Your major"
-          value={major}
-          onChangeText={setMajor}
-        />
-      </View>
-
-      {/* Ethnicity */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Ethnicity</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Your ethnicity"
-          value={ethnicity}
-          onChangeText={setEthnicity}
-        />
-      </View>
-
-      {/* Religion */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Religion</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Your religion"
-          value={religion}
-          onChangeText={setReligion}
-        />
-      </View>
-
-      {/* Diet Type */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Diet Type</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Your diet type"
-          value={diet}
-          onChangeText={setDiet}
-        />
-      </View>
-
-      {/* Cleaning Preferences */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Cleaning Preferences</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Your cleaning preferences"
-          value={cleaningPreferences}
-          onChangeText={setCleaningPreferences}
-        />
-      </View>
-
-      {/* Sleeping Schedule */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Sleeping Schedule</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Your sleeping schedule"
-          value={sleepingSchedule}
-          onChangeText={setSleepingSchedule}
-        />
-      </View>
-
-      {/* Smoking / Drugs / Drinking */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Smoking / Drugs / Drinking</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Your preferences"
-          value={smokingDrugsDrinking}
-          onChangeText={setSmokingDrugsDrinking}
-        />
-      </View>
-
-      {/* Social Medias */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Social Medias</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Your social media links"
-          value={socialMedias}
-          onChangeText={setSocialMedias}
-        />
-      </View>
-
-      {/* Submit Button */}
-      <Button title="Save Profile" onPress={writeData} />
     </ScrollView>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   header: {
     height: 60,
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingHorizontal: 16,
     paddingTop: 10,
   },
   headerText: {
     fontSize: 20,
-    color: "#3D405B",
-    fontWeight: "bold",
+    color: '#3D405B',
+    fontWeight: 'bold',
   },
   inputContainer: {
     marginBottom: 20,
   },
   label: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 8,
   },
   input: {
     height: 40,
-    borderColor: "#ccc",
+    borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 4,
     paddingLeft: 10,
   },
   uploadImage: {
-    padding: 50,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    padding:50,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   picker: {
     height: 50,
-    width: "100%",
+    width: '100%',
+  },
+  horizontal: {
+    marginBottom: 10,
+  },
+  horizontalText: {
+    textAlign: 'left',
+    fontSize: 16,
+    marginVertical: 10,
+    fontWeight: 500,
+    
+  },
+  horizontalSubtext: {
+    textAlign: 'left',
+    fontSize: 16,
+    marginVertical: 10,
+    fontWeight: 300,
+    color: '98A8BA',
+    
   },
 });
 
-export default ProfileScreen;
+export default ProfilePage;
