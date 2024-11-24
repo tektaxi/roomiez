@@ -1,4 +1,11 @@
-import { View, Text, TextInput, StyleSheet, ScrollView, Button } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  ScrollView,
+  Button,
+} from "react-native";
 import React, { useState } from "react";
 import UploadImage from "@/components/UploadImage";
 import DividerView from "@/components/DividerView";
@@ -10,7 +17,8 @@ const PreferencesPage = () => {
   const [preferredRoommateAge, setPreferredRoommateAge] = useState("");
   const [preferredCleaningHabits, setPreferredCleaningHabits] = useState("");
   const [preferredSmokingHabits, setPreferredSmokingHabits] = useState("");
-  const [preferredSleepingSchedule, setPreferredSleepingSchedule] = useState("");
+  const [preferredSleepingSchedule, setPreferredSleepingSchedule] =
+    useState("");
   const [dietPreferences, setDietPreferences] = useState("");
   const [noiseTolerance, setNoiseTolerance] = useState("");
   const [guestPolicy, setGuestPolicy] = useState("");
@@ -103,7 +111,10 @@ const PreferencesPage = () => {
 
       {/* Save Button */}
       <View style={styles.buttonContainer}>
-        <Button title="Save Preferences" onPress={() => alert("Preferences Saved!")} />
+        <Button
+          title="Save Preferences"
+          onPress={() => alert("Preferences Saved!")}
+        />
       </View>
     </ScrollView>
   );
@@ -114,13 +125,12 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: "#fff",
-    marginTop:60,
-    marginBottom:80,
-
+    marginTop: 60,
+    marginBottom: 80,
   },
   header: {
     height: 60,
-    fontSize:100,
+    fontSize: 100,
     backgroundColor: "#fff",
     paddingHorizontal: 16,
     paddingTop: 10,
