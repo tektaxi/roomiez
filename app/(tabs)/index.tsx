@@ -11,15 +11,114 @@ import {
   Animated,
 } from "react-native";
 
-import Profile from "@/components/ProfileCard";
-import { blue } from "react-native-reanimated/lib/typescript/Colors";
-import { profileData } from "@/constants/Profiles";
+import Profile from '@/components/ProfileCard';
+import { blue } from 'react-native-reanimated/lib/typescript/Colors';
+import ExpandedProfile from '@/components/ExpandedProfile';
+import type { UserProfile } from '../../types';
+
+const profileData = [
+  {
+  name:'Braden',
+  image:require('../../assets/images/braden.jpg'),
+  college: 'McGill University',
+  major: 'Computer Science',
+  year: 3,
+  age:19,
+  ethnicity:'asian',
+
+  bio: 'A passionate developer who loves React Native!',
+  socialLinks: {
+    instagram: 'https://www.instagram.com/braden_wei/',
+    spotify: 'abc',
+  },
+  preferences: {
+    nightOwl: true,
+    smoking: false,
+    drinking:false,
+    pets:false,
+    vegan:false,
+    cleanliness: 5,
+  },
+},
+{
+  name:'Alenna',
+  image: require('../../assets/images/allena.jpg'),
+  college: 'McGill University',
+  major: 'Computer Science',
+  year: 2,
+  age:20,
+  ethnicity:'asian',
+
+  bio: 'Hello World!',
+  socialLinks: {
+    instagram: 'https://www.instagram.com/allennatang',
+    spotify: 'abc',
+  },
+  preferences: {
+    nightOwl: true,
+    smoking: false,
+    drinking:false,
+    pets:false,
+    vegan:false,
+    cleanliness: 5,
+  },
+},
+{
+  name:'Bill',
+  image:require('../../assets/images/bill.jpg'),
+  college: 'McGill University',
+  major: 'Computer Science',
+  year: 2,
+  age:20,
+  ethnicity:'asian',
+
+  bio: 'Hello World!',
+  socialLinks: {
+    instagram: 'https://www.instagram.com/bill.skills.01',
+    spotify: 'abc',
+  },
+  preferences: {
+    nightOwl: true,
+    smoking: false,
+    drinking:false,
+    pets:false,
+    vegan:false,
+    cleanliness: 5,
+  },
+},
+{
+  name:'Tavi',
+  image:require('../../assets/images/tavi.jpg'),
+  college: 'McGill University',
+  major: 'Computer Science',
+  year: 2,
+  age:20,
+  ethnicity:'asian',
+  religion:'non',
+  bio: 'Passionate software developer with a love for solving complex problems. Adept at building user-friendly applications using React Native and JavaScript. Enthusiastic about AI, open-source, and collaborative teamwork. Enjoys hiking, photography, and exploring creative hobbies. Lifelong learner eager to innovate and contribute to impactful projects in technology and beyond.Hello World!',
+  priceRangeLow: 1000,
+  priceRangeHigh: 2000,
+  socialLinks: {
+    instagram: 'https://www.instagram.com/tavi_river',
+    spotify: 'abc',
+  },
+  preferences: {
+    nightOwl: true,
+    smoking: false,
+    drinking:false,
+    pets:false,
+    vegan:false,
+    cleanliness: 5,
+  },
+},
+];
+
+
 
 export default function HomeScreen() {
+  //Swipe Features
   const [currentProfiles, setCurrentProfiles] = useState(profileData);
-
-  const cardRefs = useRef(new Map());
-
+  const cardRefs = useRef(new Map()); 
   const handleSwipe = (direction: string, index: number) => {
     console.log(
       `Swiped ${direction} on profile: ${currentProfiles[index].name}`
@@ -39,38 +138,69 @@ export default function HomeScreen() {
   const handleSwipeLeft = (index: number) => {
     const card = cardRefs.current.get(index); // Get the specific card ref
     if (card) {
-      card.swipe("left"); // Programmatically swipe left
+      card.swipe('left'); // Programmatically swipe left when X
     }
+  };
+
+  const handleSwipeRight = (index: number) => {
+    const card = cardRefs.current.get(index); // Get the specific card ref
+    if (card) {
+      card.swipe('right'); // Programmatically swipe right when chat 
+    }
+  };
+
+
+  //Profile expand
+
+  const [expandedProfile, setExpandedProfile] = useState<UserProfile | null>(null);
+
+  const handleProfilePress = (profile: UserProfile) => {
+    setExpandedProfile(profile); // Expand the clicked profile
+  };
+  const handleCloseExpandedProfile = () => {
+    setExpandedProfile(null); // Close the expanded view
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Swipe Profiles</Text>
+      {expandedProfile? (
+        <ExpandedProfile
+        profile={expandedProfile}
+        onClose={handleCloseExpandedProfile} // Close the expanded view
+      />
+
+      ):(<>
+      {currentProfiles.length > 0 && (
+      <Text style={styles.header}>Find your match!</Text>)}
       <View style={styles.cardContainer}>
-        {currentProfiles.map((profile, index) => (
-          <TinderCard
-            key={profile.name}
-            ref={(ref) => cardRefs.current.set(index, ref)}
-            onSwipe={(direction) => handleSwipe(direction, index)}
-            onCardLeftScreen={() => handleCardLeftScreen(index)}
-            swipeRequirementType="position"
-            preventSwipe={["up", "down"]}
-          >
-            <View style={styles.card}>
-              <View
-                style={[
-                  { position: "absolute", width: "100%", alignSelf: "center" },
-                ]}
-              >
-                <Profile
-                  profile={profile}
-                  handleSwipeLeft={() => handleSwipeLeft(index)}
-                />
-              </View>
-            </View>
-          </TinderCard>
-        ))}
+      {currentProfiles.length>0 ?
+      currentProfiles.map((profile, index) => (
+        <TinderCard 
+          key={profile.name}
+          ref={(ref) => cardRefs.current.set(index, ref)}
+          onSwipe={(direction) => handleSwipe(direction, index)}
+          onCardLeftScreen={() => handleCardLeftScreen(index)}
+          swipeRequirementType="position"
+          preventSwipe={['up', 'down','right']} 
+        >
+          <View style={styles.card}>
+          <View style={[{ position: 'absolute', width: '100%',alignSelf: 'center'}]}>
+          <Profile 
+        profile={profile} 
+        handleSwipeLeft={() => handleSwipeLeft(index)} 
+        handleSwipeRight={() => handleSwipeRight(index)}
+        handleProfilePress={handleProfilePress} 
+      />
+          </View>
+          </View>
+        </TinderCard>
+      )):(<View style={styles.endPage}>
+        <Text style={styles.endTitle}>You are living alone!😢</Text>
       </View>
+    )}
+    </View>
+    </>
+   )}
     </View>
   );
 }
@@ -115,6 +245,44 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 20,
     borderRadius: 20,
-    resizeMode: "cover",
+    resizeMode: 'cover',
+  },
+  endPage:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    
+  },
+  endTitle:{
+    fontSize:50,
+    fontWeight: 'bold',
+    color: '#444',
+  },
+  expandedProfileContainer: {
+    flex: 1,
+    padding: 16,
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+  expandedName: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  expandedDetails: {
+    fontSize: 16,
+    marginVertical: 4,
+  },
+  closeButton: {
+    alignSelf: 'flex-end',
+    padding: 10,
+    backgroundColor: '#ddd',
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  closeButtonText: {
+    fontSize: 14,
+    color: '#333',
   },
 });
