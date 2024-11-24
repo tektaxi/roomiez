@@ -1,3 +1,14 @@
+/* 
+This file is the main firebase config file, put the API key in .env
+writeData and readData functions should work, see preferences.tsx in app/(tabs) for an implementation that writes to db
+Pre-baked profiles are defined in constants/Profiles.tsx
+
+TODO:
+- make R/W functions work properly on firebase
+- make sure index.tsx reads from the profiles properly
+- link profile data entry on profile.tsx to the database, creating/updating users
+*/
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, push, set } from 'firebase/database';

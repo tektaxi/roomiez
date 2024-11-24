@@ -9,6 +9,7 @@ import { profileData } from "@/constants/Profiles";
 export default function PrefsScreen() {
   const handleAddData = async () => {
     try {
+      // profileData IS AN ARRAY, THIS DOESN'T CREATE INDIVIDUAL USERS
       const key = await writeData("users/", profileData); // Add data to the "users/" path
       console.log("Data added successfully with key:", key);
     } catch (error) {

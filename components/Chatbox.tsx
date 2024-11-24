@@ -1,12 +1,25 @@
-import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import React, { useState } from "react";
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  KeyboardAvoidingView,
+} from "react-native";
 
-export default function ChatBox({ onClose, onSend }: { onClose: () => void; onSend: (message: string) => void }) {
-  const [message, setMessage] = useState('');
+export default function ChatBox({
+  onClose,
+  onSend,
+}: {
+  onClose: () => void;
+  onSend: (message: string) => void;
+}) {
+  const [message, setMessage] = useState("");
 
   const handleSendMessage = () => {
     onSend(message);
-    setMessage(''); // Clear the input
+    setMessage(""); // Clear the input
     onClose(); // Close the chatbox
   };
 
@@ -31,11 +44,10 @@ export default function ChatBox({ onClose, onSend }: { onClose: () => void; onSe
 
 const styles = StyleSheet.create({
   chatboxContainer: {
-    
-    position: 'absolute',
-    top:-350,
-    width:'100%',
-    backgroundColor: '#fff',
+    position: "absolute",
+    top: -350,
+    width: "100%",
+    backgroundColor: "#fff",
     borderTopLeftRadius: 20,
     borderBottomRightRadius: 20,
     borderTopRightRadius: 20,
@@ -43,29 +55,28 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   chatbox: {
-   opacity:0.5,
-    flexDirection: 'row',
-    alignItems: 'center',
+    opacity: 0.5,
+    flexDirection: "row",
+    alignItems: "center",
   },
   textInput: {
     flex: 1,
     height: 50,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
     borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: 10,
     marginRight: 10,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: "#f9f9f9",
   },
   sendButton: {
-    backgroundColor: '#007bff',
+    backgroundColor: "#007bff",
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
   },
   sendText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: "#fff",
+    fontWeight: "bold",
   },
-  
 });
