@@ -1,7 +1,7 @@
 export const profileData = [
   {
     name: "Braden",
-    image: require("../../assets/images/braden.jpg"),
+    image: require("../assets/images/braden.jpg"),
     college: "McGill University",
     major: "Computer Science",
     year: 3,
@@ -24,7 +24,7 @@ export const profileData = [
   },
   {
     name: "Alenna",
-    image: require("../../assets/images/allena.jpg"),
+    image: require("../assets/images/allena.jpg"),
     college: "McGill University",
     major: "Computer Science",
     year: 2,
@@ -47,7 +47,7 @@ export const profileData = [
   },
   {
     name: "Bill",
-    image: require("../../assets/images/bill.jpg"),
+    image: require("../assets/images/bill.jpg"),
     college: "McGill University",
     major: "Computer Science",
     year: 2,
@@ -70,7 +70,7 @@ export const profileData = [
   },
   {
     name: "Tavi",
-    image: require("../../assets/images/tavi.jpg"),
+    image: require("../assets/images/tavi.jpg"),
     college: "McGill University",
     major: "Computer Science",
     year: 2,

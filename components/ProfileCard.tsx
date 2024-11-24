@@ -89,7 +89,7 @@ export default function ProfileCard({
 
             {/* College and Major */}
             <View style={styles.details}>
-              <Text style={styles.text}>Age:{profile.age}</Text>
+              <Text style={styles.text}>Age: {profile.age}</Text>
               <Text style={styles.text}>{profile.college}</Text>
               <Text style={styles.text}>
                 {profile.major} • {getSuffix(profile.year)}

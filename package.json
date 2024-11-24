@@ -43,6 +43,7 @@
     "react-native-screens": "~4.1.0",
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.2",
+    "react-spring": "^9.7.4",
     "react-tinder-card": "^1.6.4"
   },
   "devDependencies": {
