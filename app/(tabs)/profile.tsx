@@ -30,6 +30,7 @@ const ProfilePage = () => {
   const [socialMedias, setSocialMedias] = useState('');
 
   return ( 
+
     
     <ScrollView style={styles.container}>
       
@@ -37,6 +38,7 @@ const ProfilePage = () => {
       <View style={styles.header}>
         <Text style={styles.headerText}>Allenna</Text>
       </View>
+      
       <View style={styles.container}>
         <UploadImage/>
       </View>
@@ -45,11 +47,13 @@ const ProfilePage = () => {
       <ProfileField/>
 
     </ScrollView>
+
   );
 };
 
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     padding: 16,
@@ -65,7 +69,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 20,
-    color: '#3D405B',
+    color: '#000',
     fontWeight: 'bold',
   },
   inputContainer: {
